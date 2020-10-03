@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/word_item_text"
-        style="@style/word_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@android:color/holo_orange_light" />
+    <data>
 
-    <Button
-        android:id="@+id/delete_word_button"
-        android:layout_width="40dp"
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_close_24" />
-</LinearLayout>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/word_item_text"
+            style="@style/word_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light" />
+
+        <Button
+            android:id="@+id/delete_word_button"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_close_24" />
+    </LinearLayout>
+</layout>

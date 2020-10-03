@@ -16,11 +16,12 @@ import com.example.roomwordsample.view.adapter.WordListAdapter
 import com.example.roomwordsample.viewModel.WordViewModel
 
 /**
- * TODO: 1, 【済】 deleteWordの実装
- *       2, Gitにいったん保存
- *       3,　Adapter, Model などのフォルダ分け調査
- *       4, レイアウト記述回りを DataBinding に書き換え
- *       5, etc
+ * TODO: 1, 【20200926済】 deleteWordの実装
+ *       2, 【20200926済】 first commit
+ *       3,　【20200926済】 Adapter, Model などのフォルダ分け調査
+ *       4, 【20201003済】レイアウト記述回りを DataBinding に書き換え
+ *       5, viewModelなど理解しながらDataBindingの内容を最適化
+ *       6,
  */
 class MainActivity : AppCompatActivity() {
 
