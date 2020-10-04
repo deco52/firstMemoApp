@@ -20,8 +20,11 @@ import com.example.roomwordsample.viewModel.WordViewModel
  *       2, 【20200926済】 first commit
  *       3,　【20200926済】 Adapter, Model などのフォルダ分け調査
  *       4, 【20201003済】レイアウト記述回りを DataBinding に書き換え
- *       5, viewModelなど理解しながらDataBindingの内容を最適化
- *       6,
+ *       5, 【20201004済】LiveDataの勉強　DataBindingの内容を最適化
+ *       6,_変数の意味とは
+ *       7, メモ帳アプリ　仕様検討（ざっくりノートに）
+ *       8,　Roomの仕様理解（最大文字数、 テーブル設計）
+ *       9, メモ帳に置き換え ブランチ切って作業
  */
 class MainActivity : AppCompatActivity() {
 

@@ -4,37 +4,35 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
+import android.util.Log
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import com.example.roomwordsample.R
 import com.example.roomwordsample.databinding.ActivityNewWordBinding
+import com.example.roomwordsample.viewModel.NewWordViewModel
 
 class NewWordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewWordBinding
+
+    private val viewModel = NewWordViewModel()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_word)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_new_word)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+    }
 
-        binding.buttonText = "READY…"
-        binding.editWord.addTextChangedListener() {
-            when {
-                binding.editWord.text.isEmpty() -> {
-                    binding.buttonText = "READY…"
-                    binding.buttonSave.isEnabled = false
-                }
-                else -> {
-                    binding.buttonText = getString(R.string.button_save)
-                    binding.buttonSave.isEnabled = true
-                }
-            }
+    public override fun onStart() {
+        super.onStart()
+
+        binding.editWord.addTextChangedListener() { text ->
+            Log.i("kinoshita", "textChangeListener: " + text)
+            viewModel.updateButtonText(text.isNullOrBlank())
         }
 
         binding.buttonSave.setOnClickListener {
