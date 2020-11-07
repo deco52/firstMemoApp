@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.roomwordsample.viewModel.NewWordViewModel" />
+            type="com.example.firstmemoapp.viewModel.NewWordViewModel" />
     </data>
 
     <LinearLayout

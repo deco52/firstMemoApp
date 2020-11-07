@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "518785592422",
+    "firebase_url": "https://firstmemoapp-554e2.firebaseio.com",
+    "project_id": "firstmemoapp-554e2",
+    "storage_bucket": "firstmemoapp-554e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518785592422:android:b7a551af6801289157d1a7",
+        "android_client_info": {
+          "package_name": "com.example.firstmemoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518785592422-0fgl8uialufie55tpel5en56vn84reus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrgbLhOuyuJqM4xWRfiYEbY0B7eYYRggE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518785592422-0fgl8uialufie55tpel5en56vn84reus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

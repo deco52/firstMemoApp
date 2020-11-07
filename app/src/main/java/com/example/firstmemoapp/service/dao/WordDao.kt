@@ -1,11 +1,11 @@
-package com.example.roomwordsample.service.dao
+package com.example.firstmemoapp.service.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.roomwordsample.service.model.Word
+import com.example.firstmemoapp.service.model.Word
 
 @Dao
 interface WordDao {

@@ -1,4 +1,4 @@
-package com.example.roomwordsample.view.ui.activity
+package com.example.firstmemoapp.view.ui.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -8,9 +8,9 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import com.example.roomwordsample.R
-import com.example.roomwordsample.databinding.ActivityNewWordBinding
-import com.example.roomwordsample.viewModel.NewWordViewModel
+import com.example.firstmemoapp.R
+import com.example.firstmemoapp.databinding.ActivityNewWordBinding
+import com.example.firstmemoapp.viewModel.NewWordViewModel
 
 class NewWordActivity : AppCompatActivity() {
 

@@ -1,20 +1,20 @@
-package com.example.roomwordsample.service.database
+package com.example.firstmemoapp.service.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.roomwordsample.service.dao.WordDao
-import com.example.roomwordsample.service.model.Word
+import com.example.firstmemoapp.service.dao.MemoDao
+import com.example.firstmemoapp.service.model.Word
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(entities = arrayOf(Word::class), version = 1, exportSchema = false)
-abstract class WordRoomDatabase : RoomDatabase() {
+abstract class MemoRoomDatabase : RoomDatabase() {
 
-    abstract fun wordDao(): WordDao
+    abstract fun memoDao(): MemoDao
 
     private class WordDatabaseCallback(
         private val scope: CoroutineScope
@@ -60,21 +60,21 @@ abstract class WordRoomDatabase : RoomDatabase() {
             // if it is, then create the database
             return INSTANCE
                 ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    WordRoomDatabase::class.java,
-                    "word_database"
-                )
-                    .addCallback(
-                        WordDatabaseCallback(
-                            scope
-                        )
+                    val instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        WordRoomDatabase::class.java,
+                        "word_database"
                     )
-                    .build()
-                INSTANCE = instance
-                // return instance
-                instance
-            }
+                        .addCallback(
+                            WordDatabaseCallback(
+                                scope
+                            )
+                        )
+                        .build()
+                    INSTANCE = instance
+                    // return instance
+                    instance
+                }
         }
     }
 }

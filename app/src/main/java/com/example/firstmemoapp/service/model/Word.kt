@@ -1,4 +1,4 @@
-package com.example.roomwordsample.service.model
+package com.example.firstmemoapp.service.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

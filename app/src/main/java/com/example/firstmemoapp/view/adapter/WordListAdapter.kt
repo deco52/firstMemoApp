@@ -1,4 +1,4 @@
-package com.example.roomwordsample.view.adapter
+package com.example.firstmemoapp.view.adapter
 
 import android.content.Context
 import android.util.Log
@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.roomwordsample.R
-import com.example.roomwordsample.viewModel.WordViewModel
-import com.example.roomwordsample.service.model.Word
+import com.example.firstmemoapp.R
+import com.example.firstmemoapp.viewModel.WordViewModel
+import com.example.firstmemoapp.service.model.Word
 
 class WordListAdapter internal constructor(
     context: Context

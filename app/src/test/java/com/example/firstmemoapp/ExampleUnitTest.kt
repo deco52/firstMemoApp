@@ -1,4 +1,4 @@
-package com.example.roomwordsample
+package com.example.firstmemoapp
 
 import org.junit.Test
 

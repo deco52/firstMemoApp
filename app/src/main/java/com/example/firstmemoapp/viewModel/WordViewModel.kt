@@ -1,12 +1,12 @@
-package com.example.roomwordsample.viewModel
+package com.example.firstmemoapp.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.roomwordsample.service.database.WordRoomDatabase
-import com.example.roomwordsample.service.model.Word
-import com.example.roomwordsample.service.repository.WordRepository
+import com.example.firstmemoapp.service.database.WordRoomDatabase
+import com.example.firstmemoapp.service.model.Word
+import com.example.firstmemoapp.service.repository.WordRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
