@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.viewModel.WordViewModel
 import com.example.firstmemoapp.service.model.Word
+import kotlinx.coroutines.withContext
+import java.util.*
 
 class WordListAdapter internal constructor(
     context: Context
@@ -32,8 +34,7 @@ class WordListAdapter internal constructor(
         ViewModelProvider(context as ViewModelStoreOwner).get(WordViewModel::class.java)
 
     inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val wordItemView: TextView = itemView.findViewById(R.id.word_item_text)
-        val deleteItemButton: Button = itemView.findViewById(R.id.delete_word_button)
+        val wordItemView: TextView = itemView.findViewById(R.id.test_title_test)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
@@ -45,12 +46,12 @@ class WordListAdapter internal constructor(
         val current = words[position]
         holder.wordItemView.text = current.word
 
-        holder.deleteItemButton.setOnClickListener() {
-            //TODO: データベース削除
-            Log.i("kinoshita", "onBindViewHolder: delete button click position:{$position} id:{${current.id}}"
-            )
-            wordViewModel.deleteWord(current.id)
-        }
+//        holder.deleteItemButton.setOnClickListener() {
+//            //TODO: データベース削除
+//            Log.i("kinoshita", "onBindViewHolder: delete button click position:{$position} id:{${current.id}}"
+//            )
+//            wordViewModel.deleteWord(current.id)
+//        }
     }
 
     internal fun setWords(words: List<Word>) {
