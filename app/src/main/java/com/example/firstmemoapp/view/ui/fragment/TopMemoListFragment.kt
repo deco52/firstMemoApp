@@ -1,6 +1,7 @@
 package com.example.firstmemoapp.view.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,26 @@ class TopMemoListFragment : Fragment() {
         var memo: Memo = Memo(0,"testTitle", "testText", "2021-01-09")
         var memo2: Memo = Memo(0,"testTitle2", "testText", "2021-01-09")
         var list: List<Memo> = listOf(memo, memo2)
+
+        adapter.setOnMemoListClickListener(
+            object : MemoListAdapter.OnMemoListClickListener {
+                override fun onItemClick(memo: Memo) {
+                    //遷移処理
+                    val fragmentManager: FragmentManager? = parentFragmentManager
+                    if(fragmentManager != null) {
+                        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.setCustomAnimations(
+                            android.R.anim.slide_in_left,
+                            android.R.anim.slide_out_right
+                        )
+
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.replace(R.id.container, EditMemoFragment())
+                        fragmentTransaction.commit()
+                    }
+                }
+            }
+        )
         adapter.setMemoList(list)
 
         memo_recycler_view.adapter = adapter//MemoListAdapter(requireContext())

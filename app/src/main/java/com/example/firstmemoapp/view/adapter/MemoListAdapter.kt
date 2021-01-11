@@ -18,17 +18,24 @@ import kotlinx.android.synthetic.main.recyclerview_item.view.*
 class MemoListAdapter internal constructor(
     context: Context
 ) : RecyclerView.Adapter<MemoListAdapter.MemoViewHolder>() {
-
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var memoDataList = emptyList<Memo>() // Cached copy of words
+
+    // リストアイテムのクリック -> 画面遷移で使用
+    private lateinit var listener: OnMemoListClickListener
+
+    interface OnMemoListClickListener {
+        fun onItemClick(memo: Memo)
+    }
+
+    fun setOnMemoListClickListener(listener: OnMemoListClickListener) {
+        this.listener = listener
+    }
 
     internal fun setMemoList(memoDataList: List<Memo>) {
         this.memoDataList = memoDataList
         notifyDataSetChanged()
     }
-
-    private var wordViewModel: MemoListViewModel =
-        ViewModelProvider(context as ViewModelStoreOwner).get(MemoListViewModel::class.java)
 
     inner class MemoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //todo val memoListItemView: Viewを作っていれる
@@ -47,7 +54,7 @@ class MemoListAdapter internal constructor(
         holder.testTextView.text = memoDataList[position].title
         holder.testDateTextView.text = memoDataList[position].date
         holder.itemView.setOnClickListener {
-            //todo: 編集フラグメントへの遷移　20210109
+            listener.onItemClick(memoDataList[position])
         }
     }
 
