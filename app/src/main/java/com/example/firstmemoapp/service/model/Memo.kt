@@ -3,6 +3,7 @@ package com.example.firstmemoapp.service.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "memo_table")
 class Memo(
@@ -10,4 +11,4 @@ class Memo(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "date") val date: String
-)
+): Serializable

@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.databinding.FragmentTopMemoListBinding
@@ -58,6 +60,10 @@ class TopMemoListFragment : Fragment() {
                             android.R.anim.slide_in_left,
                             android.R.anim.slide_out_right
                         )
+
+                        setFragmentResult("request_key", bundleOf(
+                            "select_memo" to memo
+                        ))
 
                         fragmentTransaction.addToBackStack(null)
                         fragmentTransaction.replace(R.id.container, EditMemoFragment())

@@ -13,7 +13,7 @@ import com.google.firebase.ktx.Firebase
 
 
 /**
- * TODO: 1, List -> Editへのデータ受け渡し
+ * TODO: 【済】1, List -> Editへのデータ受け渡し 表示
  *       2,　Roomにメモを保存(Id(AutoIncriment),タイトル、テキスト、現在時刻)
  *       3, Roomからメモを取得
  *       4,　Roomのなかみをリスト表示
