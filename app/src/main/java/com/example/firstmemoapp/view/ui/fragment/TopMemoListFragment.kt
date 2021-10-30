@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.*
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.databinding.FragmentTopMemoListBinding
@@ -21,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_top_memo_list.*
 
 class TopMemoListFragment : Fragment() {
 
-    private lateinit var viewModel: MemoListViewModel
+    private val viewModel: MemoListViewModel by activityViewModels()
     private lateinit var binding: FragmentTopMemoListBinding
 
     override fun onCreateView(
@@ -45,13 +43,31 @@ class TopMemoListFragment : Fragment() {
 
         //todo observeでrepositoryからリストを取得する形に修正する事
         var adapter = MemoListAdapter(requireContext())
-        var memo: Memo = Memo(0,"testTitle", "testText", "2021-01-09")
-        var memo2: Memo = Memo(0,"testTitle2", "testText", "2021-01-09")
+        var memo: Memo = Memo(0, "testTitle", "testText", "2021-01-09")
+        var memo2: Memo = Memo(0, "testTitle2", "testText", "2021-01-09")
         var list: List<Memo> = listOf(memo, memo2)
+
+        //todo 1: 起動時にデータを追加する処理（とりあえず入れる）
+        var tmpMemo = Memo(0, "test1", "test1", "20211030")
+        var tmpList: ArrayList<Memo> = ArrayList<Memo>(list)
+        // 普通に呼べば更新できる
+        tmpList.add(tmpMemo)
+
+        this.viewModel.insert(tmpMemo)
+        this.viewModel.showAll()
+        if (this.viewModel.allMemos.value != null) {
+            for (value in ArrayList<Memo>()) {
+                tmpList.add(value)
+            }
+        }
+
+        //todo 2:データを参照してリストに表示する処理
 
         adapter.setOnMemoListClickListener(
             object : MemoListAdapter.OnMemoListClickListener {
                 override fun onItemClick(memo: Memo) {
+//                    viewModel.deleteAll()
+
                     //遷移処理
                     val fragmentManager: FragmentManager? = parentFragmentManager
                     if(fragmentManager != null) {
@@ -72,7 +88,12 @@ class TopMemoListFragment : Fragment() {
                 }
             }
         )
-        adapter.setMemoList(list)
+//        adapter.setMemoList(viewModel.allMemos.value
+        // データベースを監視 ＞　中身を取得してリストに表示
+        this.viewModel.memoDao.getAllMemos().observe(viewLifecycleOwner, Observer {
+            adapter.setMemoList(it)
+            adapter.notifyDataSetChanged()
+        })
 
         memo_recycler_view.adapter = adapter//MemoListAdapter(requireContext())
         memo_recycler_view.layoutManager = LinearLayoutManager(requireContext())

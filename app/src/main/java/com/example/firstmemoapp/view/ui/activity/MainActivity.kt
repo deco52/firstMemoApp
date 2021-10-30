@@ -2,9 +2,11 @@ package com.example.firstmemoapp.view.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.view.ui.fragment.EditMemoFragment
 import com.example.firstmemoapp.view.ui.fragment.TopMemoListFragment
+import com.example.firstmemoapp.viewModel.MemoListViewModel
 import com.example.firstmemoapp.viewModel.WordViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -28,10 +30,13 @@ class MainActivity : AppCompatActivity() {
 
     private val newWordActivityRequestCode = 1
     private lateinit var wordViewModel: WordViewModel
+    private lateinit var memoViewMode: MemoListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        memoViewMode = MemoListViewModel(this.application)
 
         if (savedInstanceState == null) {
             val fragment = when {
@@ -57,7 +62,7 @@ class MainActivity : AppCompatActivity() {
      * 初回起動判定
      */
     private fun isFirstLaunch(): Boolean {
-        // SharedPreferenceの新しいので初回起動判定を行う
+        // TODO:SharedPreferenceの新しいので初回起動判定を行う
         return false
     }
 }

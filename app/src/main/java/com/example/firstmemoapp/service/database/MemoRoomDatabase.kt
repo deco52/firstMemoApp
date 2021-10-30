@@ -1,22 +1,23 @@
 package com.example.firstmemoapp.service.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.firstmemoapp.service.dao.MemoDao
-import com.example.firstmemoapp.service.model.Word
+import com.example.firstmemoapp.service.model.Memo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(Word::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Memo::class), version =2, exportSchema = false)
 abstract class MemoRoomDatabase : RoomDatabase() {
 
     abstract fun memoDao(): MemoDao
 
-    private class WordDatabaseCallback(
+    private class MemoDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
@@ -24,25 +25,11 @@ abstract class MemoRoomDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    var wordDao = database.wordDao()
+                    Log.d("kinoshita", "insert sample: ")
+                    var memoDao = database.memoDao()
 
-                    // Delete all content here.
-                    // wordDao.deleteAll()
-
-                    // Add sample words.
-                    var word =
-                        Word(0, "Hello")
-                    wordDao.insert(word)
-                    word = Word(
-                        0,
-                        "World!"
-                    )
-                    wordDao.insert(word)
-
-                    // TODO: Add your own words!
-                    word =
-                        Word(0, "TODO!")
-                    wordDao.insert(word)
+                    var sampleMemo = Memo(0,"入っていて","くれお！","202020202020")
+                    memoDao.insert(sampleMemo)
                 }
             }
         }
@@ -50,26 +37,27 @@ abstract class MemoRoomDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: WordRoomDatabase? = null
+        private var INSTANCE: MemoRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): WordRoomDatabase {
+        ): MemoRoomDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE
                 ?: synchronized(this) {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
-                        WordRoomDatabase::class.java,
-                        "word_database"
+                        MemoRoomDatabase::class.java,
+                        "memo_database"
                     )
                         .addCallback(
-                            WordDatabaseCallback(
+                            MemoDatabaseCallback(
                                 scope
                             )
                         )
+                        .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
                     // return instance
