@@ -51,6 +51,7 @@ class MemoListAdapter internal constructor(
 
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {
         Log.i("kinoshita", "onBindViewHolder: position = " + position)
+        Log.i("kinoshita", "onBindViewHolder: memoId = " + memoDataList[position].id)
         holder.testTextView.text = memoDataList[position].title
         holder.testDateTextView.text = memoDataList[position].date
         holder.itemView.setOnClickListener {

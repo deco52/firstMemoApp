@@ -16,8 +16,11 @@ class MemoRepository(private val memoDao: MemoDao) {
     }
 
     suspend fun insert(memo: Memo) {
-        Log.d("kinoshita", "insert click: ")
         memoDao.insert(memo)
+    }
+
+    suspend fun update(memo: Memo) {
+        memoDao.update(memo)
     }
 
     suspend fun deleteAll() {

@@ -1,10 +1,7 @@
 package com.example.firstmemoapp.service.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.firstmemoapp.service.model.Memo
 
 @Dao
@@ -16,6 +13,9 @@ interface MemoDao {
     // 更新時の競合を排除する設定
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(memo: Memo)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(memo: Memo)
 
     @Query("DELETE FROM memo_table")
     suspend fun deleteAll()

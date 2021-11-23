@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity(tableName = "memo_table")
 class Memo(
-    @PrimaryKey(autoGenerate = true) val memoId: Int,
+    @ColumnInfo(name = "id")@PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "date") val date: String
