@@ -1,6 +1,7 @@
 package com.example.firstmemoapp.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -37,7 +38,7 @@ class MemoListViewModel(application: Application) : AndroidViewModel(application
     }
 
     /**
-     * Launching a new coroutine to insert the data in a non-blocking way
+         * Launching a new coroutine to insert the data in a non-blocking way
      */
     fun showAll() = viewModelScope.launch(Dispatchers.IO) {
         repository.showAll()

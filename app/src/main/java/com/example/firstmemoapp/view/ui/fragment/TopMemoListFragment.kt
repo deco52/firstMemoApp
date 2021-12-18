@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.databinding.FragmentTopMemoListBinding
@@ -16,6 +17,8 @@ import com.example.firstmemoapp.service.model.Memo
 import com.example.firstmemoapp.view.adapter.MemoListAdapter
 import com.example.firstmemoapp.viewModel.MemoListViewModel
 import kotlinx.android.synthetic.main.fragment_top_memo_list.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TopMemoListFragment : Fragment() {
 
@@ -32,10 +35,6 @@ class TopMemoListFragment : Fragment() {
         this.binding = binding
         return binding.root
         //todo 2020/12/12 RecyclerViewの枠表示までできた
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -70,16 +69,19 @@ class TopMemoListFragment : Fragment() {
 
                     //遷移処理
                     val fragmentManager: FragmentManager? = parentFragmentManager
-                    if(fragmentManager != null) {
-                        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+                    if (fragmentManager != null) {
+                        val fragmentTransaction: FragmentTransaction =
+                            fragmentManager.beginTransaction()
                         fragmentTransaction.setCustomAnimations(
                             android.R.anim.slide_in_left,
                             android.R.anim.slide_out_right
                         )
 
-                        setFragmentResult("request_key", bundleOf(
-                            "select_memo" to memo
-                        ))
+                        setFragmentResult(
+                            "request_key", bundleOf(
+                                "select_memo" to memo
+                            )
+                        )
 
                         fragmentTransaction.addToBackStack(null)
                         fragmentTransaction.replace(R.id.container, EditMemoFragment())
@@ -97,5 +99,42 @@ class TopMemoListFragment : Fragment() {
 
         memo_recycler_view.adapter = adapter//MemoListAdapter(requireContext())
         memo_recycler_view.layoutManager = LinearLayoutManager(requireContext())
+
+        //　リストの定義ここまで
+
+
+        // TODO: 1126時点　　　　TaskMockＵＩの作り込み > タスクDBの動作確認をする事
+        // -1.mock fragmentへの画面遷移　眠い
+        // TODO:1212 Dateの扱いに苦戦　Date を DATETIMEに変えれば解決しそうなので、次はこれを試す
+        // -0.5 　データの作成(Task)まではできている　時間がないので↑で成功するか試す
+
+        // TimeStampにする事で突破　20211218
+        // selectしたらなぜか入ってない？ -> 入ってはいるみたい　一覧取得がうまくいかない
+
+
+        // TODO：1218時点:いっそもうリストで出しちゃう　TaskListViewFragment(トップページ)をつくる
+        // New / Edit の viewも作る　　ひとまず合計3つ
+        // 1.リスト押下で洗濯したのをエディットに出す(select)
+        // 2.日付指定もできるようにする
+        // 3.登録日、更新日も入れる
+        //、insert(新規ボタン)、update()
+
+        // mockへの遷移
+        binding.mockButton.setOnClickListener {
+            //遷移処理
+            val fragmentManager: FragmentManager? = parentFragmentManager
+            if (fragmentManager != null) {
+                val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.replace(R.id.container, TaskMockFragment())
+                fragmentTransaction.commit()
+            }
+
+        }
     }
 }

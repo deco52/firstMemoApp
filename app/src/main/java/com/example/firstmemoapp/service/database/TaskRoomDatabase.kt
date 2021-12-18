@@ -1,35 +1,45 @@
 package com.example.firstmemoapp.service.database
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.annotation.RequiresApi
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.firstmemoapp.service.dao.MemoDao
-import com.example.firstmemoapp.service.model.Memo
+import com.example.firstmemoapp.service.TimestampConverter
+import com.example.firstmemoapp.service.dao.TaskDao
+import com.example.firstmemoapp.service.model.Task
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.sql.Date
+import java.sql.Timestamp
+import java.time.LocalDateTime
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(Memo::class), version =3, exportSchema = false)
-abstract class MemoRoomDatabase : RoomDatabase() {
+@Database(entities = arrayOf(Task::class), version = 3, exportSchema = false)
+@TypeConverters(TimestampConverter::class)
+abstract class TaskRoomDatabase : RoomDatabase() {
 
-    abstract fun memoDao(): MemoDao
+    abstract fun taskDao(): TaskDao
 
-    private class MemoDatabaseCallback(
+    // アプリ起動時処理
+    private class TaskDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
+
+            // タスクDBのレコードが0件ならばサンプルタスクを設定する（5分後）
             INSTANCE?.let { database ->
                 scope.launch {
                     Log.d("kinoshita", "insert sample: ")
-                    var memoDao = database.memoDao()
-
-                    var sampleMemo = Memo(0,"入っていて","くれお！","202020202020")
-                    memoDao.insert(sampleMemo)
+                    var taskDao = database.taskDao()
+                    var now = Timestamp(System.currentTimeMillis())
+                    var sampleTask = Task(0,"てすとの","サンプルだお！",
+                        0, 0, 2, 0,
+                        now,now,now)
+                    taskDao.insert(sampleTask)
                 }
             }
         }
@@ -37,23 +47,21 @@ abstract class MemoRoomDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: MemoRoomDatabase? = null
+        private var INSTANCE: TaskRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): MemoRoomDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+        ): TaskRoomDatabase {
             return INSTANCE
                 ?: synchronized(this) {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
-                        MemoRoomDatabase::class.java,
-                        "memo_database"
+                        TaskRoomDatabase::class.java,
+                        "task_database"
                     )
                         .addCallback(
-                            MemoDatabaseCallback(
+                            TaskDatabaseCallback(
                                 scope
                             )
                         )

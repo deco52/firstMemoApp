@@ -2,16 +2,15 @@ package com.example.firstmemoapp.view.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.view.ui.fragment.EditMemoFragment
 import com.example.firstmemoapp.view.ui.fragment.TopMemoListFragment
 import com.example.firstmemoapp.viewModel.MemoListViewModel
+import com.example.firstmemoapp.viewModel.TaskMockViewModel
 import com.example.firstmemoapp.viewModel.WordViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -30,13 +29,15 @@ class MainActivity : AppCompatActivity() {
 
     private val newWordActivityRequestCode = 1
     private lateinit var wordViewModel: WordViewModel
-    private lateinit var memoViewMode: MemoListViewModel
+    private lateinit var memoViewModel: MemoListViewModel
+    private lateinit var taskViewModel: TaskMockViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        memoViewMode = MemoListViewModel(this.application)
+        memoViewModel = MemoListViewModel(this.application)
+        taskViewModel = TaskMockViewModel(this.application)
 
         if (savedInstanceState == null) {
             val fragment = when {

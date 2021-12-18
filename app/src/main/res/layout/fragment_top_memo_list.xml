@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.example.firstmemoapp.viewModel.MemoListViewModel" />
@@ -13,13 +14,22 @@
         android:layout_height="match_parent"
         tools:context="com.example.firstmemoapp.view.ui.fragment.TopMemoListFragment">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/memo_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_weight="1" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mock_button"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="mock task"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/memo_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mock_button"
+            app:layout_constraintVertical_weight="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

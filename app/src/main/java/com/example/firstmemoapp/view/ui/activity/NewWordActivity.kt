@@ -30,7 +30,7 @@ class NewWordActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
 
-        binding.editWord.addTextChangedListener() { text ->
+        binding.editWord.addTextChangedListener { text ->
             Log.i("kinoshita", "textChangeListener: " + text)
             viewModel.updateButtonText(text.isNullOrBlank())
         }

@@ -62,8 +62,16 @@ class EditMemoViewModel(application: Application) : AndroidViewModel(application
     }
 
 
-    // TODO: 20211107 今日はここまで　次回　新規と削除やる
-    //        PS:EditTExt開くとレイアウト崩れのバグあり
+//    TODO:20211123
+//    Memoでinsert,select,delete,updateを実装　動作確認済み
+//
+//    次回TODO：
+//    　- TaskでRoom一連クラス作成 > mockUIのmock(ガワ)だけ作成済み　中身はまだ
+//        TODO: 20211126 ここまで↑
+//    　- MemoListにボタンの口を作成 > mockクラスでTaskのDB操作の基礎確認 最新をselect,　同じViewで　ボタンを切り替えて確認
+//    　　　　　　削除したらMemoListに戻る
+//    　- Task用のView,ViewModelを作成
+//    　- (タイマーや時間による見た目の変化の作成　これは12月以降　もしくは↑と平行)
     fun onClickUpdateButton() {
         Log.i("kinoshita", "Update:${memo.id}")
 
