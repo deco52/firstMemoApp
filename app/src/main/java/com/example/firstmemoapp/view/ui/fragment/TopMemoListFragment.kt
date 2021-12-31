@@ -1,7 +1,6 @@
 package com.example.firstmemoapp.view.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.databinding.FragmentTopMemoListBinding
@@ -17,8 +15,6 @@ import com.example.firstmemoapp.service.model.Memo
 import com.example.firstmemoapp.view.adapter.MemoListAdapter
 import com.example.firstmemoapp.viewModel.MemoListViewModel
 import kotlinx.android.synthetic.main.fragment_top_memo_list.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class TopMemoListFragment : Fragment() {
 
@@ -113,11 +109,20 @@ class TopMemoListFragment : Fragment() {
 
 
         // TODO：1218時点:いっそもうリストで出しちゃう　TaskListViewFragment(トップページ)をつくる
-        // New / Edit の viewも作る　　ひとまず合計3つ
-        // 1.リスト押下で洗濯したのをエディットに出す(select)
-        // 2.日付指定もできるようにする
-        // 3.登録日、更新日も入れる
+
+        // todo: 1231 リスト表示まで完了　> ついでにチェックボックス切り替えも追加 updateもできるよ
+
+        //todo: 2022やること
+        // 1.ヘッダに　追加 と 設定ボタン追加　
+        // 2.New / Edit の viewを作る　　ひとまず合計3つ
+        // 3.Newでリスト追加できるようにする
+        // 4.リスト押下で選択したタスクをエディットに出す
+        // 5.日付指定もできるようにする
+        // 6.登録日、更新日も入れる
         //、insert(新規ボタン)、update()
+
+        // 完了の前に確認ダイアログほしいかも　-> それで不可逆にする（編集がめんで戻せる口は作る
+        // 完了の見た目がわかりにくい（選択に見える）ので、改良する事　文字塗装色入れる？
 
         // mockへの遷移
         binding.mockButton.setOnClickListener {

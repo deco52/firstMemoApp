@@ -11,7 +11,9 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.LiveData
 import com.example.firstmemoapp.databinding.FragmentEditMemoBinding
 import com.example.firstmemoapp.databinding.FragmentTaskMockBinding
+
 import com.example.firstmemoapp.databinding.FragmentTaskMockBindingImpl
+
 import com.example.firstmemoapp.google.EventObserver
 import com.example.firstmemoapp.service.model.Memo
 import com.example.firstmemoapp.service.model.Task

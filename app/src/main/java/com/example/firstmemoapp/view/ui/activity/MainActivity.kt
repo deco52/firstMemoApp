@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.view.ui.fragment.EditMemoFragment
 import com.example.firstmemoapp.view.ui.fragment.TopMemoListFragment
+import com.example.firstmemoapp.view.ui.fragment.TopTaskListFragment
 import com.example.firstmemoapp.viewModel.MemoListViewModel
+import com.example.firstmemoapp.viewModel.TaskListViewModel
 import com.example.firstmemoapp.viewModel.TaskMockViewModel
 import com.example.firstmemoapp.viewModel.WordViewModel
 import com.google.android.gms.ads.AdRequest
@@ -30,19 +32,21 @@ class MainActivity : AppCompatActivity() {
     private val newWordActivityRequestCode = 1
     private lateinit var wordViewModel: WordViewModel
     private lateinit var memoViewModel: MemoListViewModel
-    private lateinit var taskViewModel: TaskMockViewModel
+//    private lateinit var taskViewModel: TaskMockViewModel
+    private lateinit var taskViewModel: TaskListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         memoViewModel = MemoListViewModel(this.application)
-        taskViewModel = TaskMockViewModel(this.application)
+//        taskViewModel = TaskMockViewModel(this.application)
+        taskViewModel = TaskListViewModel(this.application)
 
         if (savedInstanceState == null) {
             val fragment = when {
                 isFirstLaunch() -> EditMemoFragment()
-                else -> TopMemoListFragment()
+                else -> TopTaskListFragment()
             }
             val transaction = supportFragmentManager.beginTransaction()
 
