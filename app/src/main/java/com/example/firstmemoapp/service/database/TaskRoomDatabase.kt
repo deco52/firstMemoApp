@@ -31,17 +31,20 @@ abstract class TaskRoomDatabase : RoomDatabase() {
             super.onOpen(db)
 
             // タスクDBのレコードが0件ならばサンプルタスクを設定する（5分後）
-            INSTANCE?.let { database ->
-                scope.launch {
-                    Log.d("kinoshita", "insert sample: ")
-                    var taskDao = database.taskDao()
-                    var now = Timestamp(System.currentTimeMillis())
-                    var sampleTask = Task(0,"てすとの","サンプルだお！",
-                        0, 0, 2, 0,
-                        now,now,now)
-                    taskDao.insert(sampleTask)
-                }
-            }
+//            INSTANCE?.let { database ->
+//                scope.launch {
+//                    Log.d("kinoshita", "insert sample: ")
+//                    var taskDao = database.taskDao()
+//                    var listSize = taskDao.getAllTasks()
+//                    var now = Timestamp(System.currentTimeMillis())
+//                    var sampleTask = Task(0,"てすとの：${listSize + 1}","サンプルだお！",
+//                        0, 0, 2, 0,
+//                        now,now,now)
+//                    taskDao.insert(sampleTask)
+//                }
+//            }
+
+
         }
     }
 

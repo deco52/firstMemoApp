@@ -61,8 +61,9 @@ class TaskListAdapter internal constructor(
 
         holder.titleTextView.text = taskDataList[position].title
         holder.detailTextView.text = taskDataList[position].text
+        // TODO:後日多言語対応したい
         holder.periodDateTextView.text =
-            SimpleDateFormat("期限：yyyy/MM/dd HH:mm:ss").format(taskDataList[position].period_time)
+            SimpleDateFormat("期限：yyyy年M月d日(E) HH:mm").format(taskDataList[position].period_time)
         when (taskDataList[position].status) {
             // TODO:チェック状態をTaskクラスで定数で持ちたい
             1 -> holder.statusCheckBox.isChecked = true

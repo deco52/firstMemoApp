@@ -139,7 +139,6 @@ class TopMemoListFragment : Fragment() {
                 fragmentTransaction.replace(R.id.container, TaskMockFragment())
                 fragmentTransaction.commit()
             }
-
         }
     }
 }

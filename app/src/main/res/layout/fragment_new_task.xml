@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.firstmemoapp.viewModel.NewTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">>
+
+        <EditText
+            android:id="@+id/task_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@{vm.titleHint}"
+            android:text="@={vm.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/task_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:ellipsize="end"
+            android:gravity="top|left"
+            android:hint="@{vm.textHint}"
+            android:lines="19"
+            android:text="@={vm.text}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_title"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/period_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="yyyy年mm月dd日(D)"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_details" />
+
+        <TextView
+            android:id="@+id/period_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="HH:mm:ss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_details" />
+
+
+        <!--            TODO:string.xml化-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/insert_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:onClick="@{() -> vm.onClickInsertButton()}"
+            android:text="新規追加"
+            app:layout_constraintTop_toBottomOf="@id/period_date"
+            tools:ignore="MissingConstraints" />
+
+
+        <!--　EditTAskでさいりようするのでコメントアウト　後で消す
+                <androidx.appcompat.widget.AppCompatButton-->
+        <!--            android:id="@+id/update_button"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:onClick="@{() -> vm.onClickUpdateButton()}"-->
+        <!--            android:text="更新"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/memo_text"-->
+        <!--            tools:ignore="MissingConstraints" />-->
+        <!--        -->
+        <!--        <androidx.appcompat.widget.AppCompatButton-->
+        <!--            android:id="@+id/delete_button"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:onClick="@{() -> vm.onClickDeleteButton()}"-->
+        <!--            android:text="削除"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/insert_button"-->
+        <!--            tools:ignore="MissingConstraints" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
