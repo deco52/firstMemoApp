@@ -1,16 +1,26 @@
 package com.example.firstmemoapp.view.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.service.model.Task
+import com.example.firstmemoapp.view.ui.activity.MainActivity
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import kotlin.coroutines.coroutineContext
+import com.google.android.material.snackbar.Snackbar
+
+import android.R.layout
+import com.example.firstmemoapp.service.model.TaskStatus
+
 
 class TaskListAdapter internal constructor(
     context: Context
@@ -63,33 +73,70 @@ class TaskListAdapter internal constructor(
         holder.detailTextView.text = taskDataList[position].text
         // TODO:後日多言語対応したい
         holder.periodDateTextView.text =
-            SimpleDateFormat("期限：yyyy年M月d日(E) HH:mm").format(taskDataList[position].period_time)
+            SimpleDateFormat("yyyy年M月d日(E) HH:mm").format(taskDataList[position].period_time)
+
+        // 完了状態のチェック
+        // 期限日付テキスト：
+        // 期限が切れていた場合
+        if (taskDataList[position].period_time.before(Timestamp(System.currentTimeMillis()))) {
+            holder.periodDateTextView.setTextColor(Color.RED)
+            // changeListener.onItemChange(taskDataList[position], taskDataList[position].status == TaskStatus.DONE.id)
+        }
+        // 完了になっている場合
+        if (taskDataList[position].status == TaskStatus.DONE.id) {
+            holder.periodDateTextView.setTextColor(Color.GREEN)
+            // リスト上では完了状態になったら固定にする　詳細画面でのみ未完に戻せる
+            holder.statusCheckBox.isEnabled = false
+        } else {
+            holder.statusCheckBox.isEnabled = true
+        }
+
+        if(taskDataList[position].status == TaskStatus.NO_START.id && taskDataList[position].period_time.after(Timestamp(System.currentTimeMillis()))){
+            holder.periodDateTextView.setTextColor(Color.BLACK)
+        }
+
         when (taskDataList[position].status) {
-            // TODO:チェック状態をTaskクラスで定数で持ちたい
-            1 -> holder.statusCheckBox.isChecked = true
+            TaskStatus.DONE.id -> holder.statusCheckBox.isChecked = true
             else -> holder.statusCheckBox.isChecked = false
         }
 
         holder.itemView.setOnClickListener {
             listener.onItemClick(taskDataList[position])
         }
+
+        holder.statusCheckBox.setOnClickListener {
+            AlertDialog.Builder(holder.statusCheckBox.context)
+                .setTitle("確認")
+                .setMessage("タスクを完了にしますか？")
+                .setPositiveButton("はい") { dialog, which ->
+                    var tmpTask = taskDataList[position]
+
+                    holder.statusCheckBox.isEnabled = false
+                    holder.statusCheckBox.isChecked = true
+                    changeListener.onItemChange(taskDataList[position], true)
+
+                    Snackbar
+                        .make(holder.statusCheckBox, "タスク完了お疲れ様です！", Snackbar.LENGTH_SHORT)
+                        .setAction("元に戻す") {
+                            holder.statusCheckBox.isEnabled = true
+                            holder.statusCheckBox.isChecked = false
+                            changeListener.onItemChange(tmpTask, false)
+                        }
+                        .show()
+                }
+                .setNegativeButton("キャンセル") { dialog, which ->
+                    holder.statusCheckBox.isChecked = false
+                }
+                .show()
+        }
+
         holder.statusCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            changeListener.onItemChange(taskDataList[position], isChecked)
-//            var tmp = taskDataList[position]
-//            var updateTask = Task(
-//                tmp.task_id,
-//                tmp.title,
-//                tmp.text,
-//                if (isChecked) 1 else 0,
-//                tmp.last_status,
-//                tmp.type,
-//                tmp.notification,
-//                tmp.period_time,
-//                tmp.register_time,
-//                tmp.update_time
-//            )
+            // TODO:ダイアログのリファクタリング
+            // TODO:文字列のstring.xml化
+
         }
     }
 
     override fun getItemCount() = taskDataList.size
+
 }

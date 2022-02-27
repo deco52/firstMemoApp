@@ -53,11 +53,11 @@ class MainActivity : AppCompatActivity() {
             transaction.add(R.id.container, fragment).commit()
         }
 
-        // Firebase 広告
-        MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
-        val mAdView = findViewById<AdView>(R.id.adView)
-        val adRequest: AdRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        //  TODO:Firebase 広告
+//        MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
+//        val mAdView = findViewById<AdView>(R.id.adView)
+//        val adRequest: AdRequest = AdRequest.Builder().build()
+//        mAdView.loadAd(adRequest)
 
         // Firebase イベントテスト
 

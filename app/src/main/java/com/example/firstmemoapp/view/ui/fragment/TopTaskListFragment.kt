@@ -1,6 +1,7 @@
 package com.example.firstmemoapp.view.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstmemoapp.R
 import com.example.firstmemoapp.databinding.FragmentTopTaskListBinding
 import com.example.firstmemoapp.service.model.Task
+import com.example.firstmemoapp.service.model.TaskStatus
 import com.example.firstmemoapp.view.adapter.TaskListAdapter
 import com.example.firstmemoapp.viewModel.TaskListViewModel
 import kotlinx.android.synthetic.main.fragment_top_task_list.*
@@ -45,10 +48,10 @@ class TopTaskListFragment : Fragment() {
             val fragmentManager: FragmentManager? = parentFragmentManager
             if (fragmentManager != null) {
                 val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.setCustomAnimations(
-                    android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right
-                )
+//                fragmentTransaction.setCustomAnimations(
+//                    android.R.anim.slide_in_left,
+//                    android.R.anim.slide_out_right
+//                )
 
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.replace(R.id.container, NewTaskFragment())
@@ -66,17 +69,17 @@ class TopTaskListFragment : Fragment() {
                     if (fragmentManager != null) {
                         val fragmentTransaction: FragmentTransaction =
                             fragmentManager.beginTransaction()
-                        fragmentTransaction.setCustomAnimations(
-                            android.R.anim.slide_in_left,
-                            android.R.anim.slide_out_right
-                        )
+//                        fragmentTransaction.setCustomAnimations(
+//                            android.R.anim.slide_in_right,
+//                            android.R.anim.slide_out_left
+//                        )
                         setFragmentResult(
                             "request_key", bundleOf(
                                 "select_task" to task
                             )
                         )
                         fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.replace(R.id.container, EditMemoFragment())
+                        fragmentTransaction.replace(R.id.container, EditTaskFragment())
                         fragmentTransaction.commit()
                     }
                 }
@@ -90,7 +93,15 @@ class TopTaskListFragment : Fragment() {
                         tmp.task_id,
                         tmp.title,
                         tmp.text,
-                        if (isChecked) 1 else 0,
+                        // 適切なステータス状態をセット
+                        if (isChecked) TaskStatus.DONE.id
+                        else {
+                            if (tmp.period_time.before(Timestamp(System.currentTimeMillis()))){
+                                TaskStatus.PERIOD_OVER.id
+                            } else {
+                                TaskStatus.NO_START.id
+                            }
+                        },
                         tmp.last_status,
                         tmp.type,
                         tmp.notification,
@@ -117,10 +128,23 @@ class TopTaskListFragment : Fragment() {
                     viewModel.taskDao.insert(sampleTask)
                 }
             }
+
+            // リストのソート方法を指定
+            val periodComparator : Comparator<Task> = compareBy { it.period_time }
+            val statusComparator : Comparator<Task> = compareBy { it.status }
             // リストに中身を表示
-            adapter.setTaskList(it)
+
+            adapter.setTaskList(it.sortedWith(periodComparator).sortedWith(statusComparator))
+
+            var tmp: List<Task> = it.sortedWith(periodComparator).sortedWith(statusComparator)
+            tmp.forEach {
+                Log.i("kinoshita", "task status = " + it.status)
+            }
+
             adapter.notifyDataSetChanged()
         })
+        task_recycler_view.addItemDecoration(
+            DividerItemDecoration(context, LinearLayoutManager(context).getOrientation()))
         task_recycler_view.adapter = adapter//TaskListAdapter(requireContext())
         task_recycler_view.layoutManager = LinearLayoutManager(requireContext())
     }

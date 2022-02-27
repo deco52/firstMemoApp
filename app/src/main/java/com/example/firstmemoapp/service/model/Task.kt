@@ -12,7 +12,12 @@ class Task(
     @ColumnInfo(name = "task_id") @PrimaryKey(autoGenerate = true) val task_id: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "details") val text: String?,
-    // タスクの状況
+    /** タスクの状況
+    　- 0：未達成(期限前)     白
+    　- 1：未達成（期限切れ）    赤
+    　- 2：達成済み    緑
+    　- 4：保留中    黄色
+     */
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "last_status") val last_status: Int,
     // タスク優先度
