@@ -1,10 +1,12 @@
 package com.example.firstmemoapp.view.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.*
@@ -21,6 +23,10 @@ import com.example.firstmemoapp.viewModel.TaskListViewModel
 import kotlinx.android.synthetic.main.fragment_top_task_list.*
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.Comparator
 
 
 class TopTaskListFragment : Fragment() {
@@ -40,6 +46,7 @@ class TopTaskListFragment : Fragment() {
         //todo 2020/12/12 RecyclerViewの枠表示までできた
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -119,8 +126,21 @@ class TopTaskListFragment : Fragment() {
             // リスト取得時に登録タスクが0件ならば、サンプルを挿入
             if (it.isEmpty()) {
                 var now = Timestamp(System.currentTimeMillis())
+
+                // 仮の期限（翌日）を作成
+//                var today = LocalDateTime.now()     //Today
+//                var future = today.plusDays(1)     //Plus 1 hour
+//                var str: String = String.format(Locale.US, "%d-%d-%d ", today.year, today.month, today.plusDays(1).toLocalDate().dayOfMonth)
+//                Log.i(
+//                    "kinoshita",
+//                    "samplePeriod: ${str + SimpleDateFormat("HH:mm:00").format(now.time)}"
+//                )
+//                val samplePeriod =
+//                    Timestamp.valueOf(str + SimpleDateFormat("HH:mm:00").format(now.time))
+
+                // サンプルオブジェクト
                 var sampleTask = Task(
-                    0, "てすとの", "サンプルだお！",
+                    0, "これはサンプルです", "ここはメモ欄です\n終わったら右上をチェックしてください\n期限は右下に表示されます",
                     0, 0, 2, 0,
                     now, now, now
                 )
